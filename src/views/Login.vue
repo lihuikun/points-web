@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { showToast, showLoadingToast, closeToast } from 'vant'
+import { Toast } from 'vant'
 import { login } from '../api/auth'
 import type { LoginResponse } from '../api/types'
 
@@ -58,20 +58,18 @@ const loading = ref(false)
 const onSubmit = async () => {
   try {
     loading.value = true
-    showLoadingToast({ message: '登录中...', forbidClick: true })
     const res = await login(email.value, password.value)
     if (res.code === 200) {
       localStorage.setItem('token', res.data.token)
-      showToast({ message: '登录成功', icon: 'success' })
+      Toast.success('登录成功',{duration:1000})
       router.push('/')
     } else {
-      showToast({ message: res.msg, icon: 'fail' })
+      Toast.fail(res.msg,{duration:3000})
     }
   } catch (error) {
-    showToast({ message: '登录失败', icon: 'fail' })
+    Toast.fail('登录失败',{duration:3000})
   } finally {
     loading.value = false
-    closeToast()
   }
 }
 </script>

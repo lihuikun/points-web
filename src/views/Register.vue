@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { showToast, showLoadingToast, closeToast } from 'vant'
+import { Toast } from 'vant'
 import { register } from '../api/auth'
 
 const router = useRouter()
@@ -56,19 +56,17 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const onSubmit = async () => {
   try {
     loading.value = true
-    showLoadingToast({ message: '注册中...', forbidClick: true })
     const res = await register(email.value, password.value)
     if (res.code === 200) {
-      showToast({ message: '注册成功', icon: 'success' })
+      Toast.success('注册成功',{duration:1000})
       router.push('/login')
     } else {
-      showToast({ message: res.msg, icon: 'fail' })
+      Toast.fail(res.msg,{duration:3000})
     }
   } catch (error) {
-    showToast({ message: '注册失败', icon: 'fail' })
+    Toast.fail('注册失败',{duration:3000})
   } finally {
     loading.value = false
-    closeToast()
   }
 }
 </script>

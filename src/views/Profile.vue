@@ -213,8 +213,11 @@ const handleUpdateInfo = async () => {
   try {
     const res = await updateUserInfo(editForm.value)
     if (res.code === 200) {
-      showSuccessToast('更新成功')
-      userInfo.value = res.data
+      showToast('更新成功')
+      const userRes = await getUserInfo()
+      if (userRes.code === 200) {
+        userInfo.value = userRes.data
+      }
     } else {
       showToast(res.msg)
     }
