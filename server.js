@@ -9,6 +9,6 @@ const server = http.createServer({
     autoIndex: true,
 });
 
-server.listen(1998, 'http://lihk.serv00.net', () => {
+server.listen(1998, 'http://91.185.189.19', () => {
     console.log('Vue project is running at http://localhost:8080');
 });
