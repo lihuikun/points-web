@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://lihk.serv00.net:13381',
         changeOrigin: true
       }
     }

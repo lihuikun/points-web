@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://lihk.serv00.net:13381/api',
   timeout: 5000
 })
 
