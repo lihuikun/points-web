@@ -22,6 +22,9 @@ dependencies:
     version: 4.5.0(vue@3.5.13)
 
 devDependencies:
+  '@types/node':
+    specifier: ^22.10.5
+    version: 22.10.5
   '@vant/auto-import-resolver':
     specifier: ^1.2.1
     version: 1.2.1
@@ -39,7 +42,7 @@ devDependencies:
     version: 0.28.0(vue@3.5.13)
   vite:
     specifier: ^6.0.5
-    version: 6.0.7
+    version: 6.0.7(@types/node@22.10.5)
   vue-tsc:
     specifier: ^2.2.0
     version: 2.2.0(typescript@5.6.3)
@@ -491,6 +494,12 @@ packages:
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
     dev: true
 
+  /@types/node@22.10.5:
+    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
+    dependencies:
+      undici-types: 6.20.0
+    dev: true
+
   /@vant/auto-import-resolver@1.2.1:
     resolution: {integrity: sha512-czGWW4UolNITkF3qQSQlpHDHAsI3/GHVKbRMmEEpry7NWdnU4p5a5jBi0VApbaLa5g80Hy10XVs3IB+UozoSUw==}
     dev: true
@@ -514,7 +523,7 @@ packages:
       vite: ^5.0.0 || ^6.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 6.0.7
+      vite: 6.0.7(@types/node@22.10.5)
       vue: 3.5.13(typescript@5.6.3)
     dev: true
 
@@ -1078,6 +1087,10 @@ packages:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
     dev: true
 
+  /undici-types@6.20.0:
+    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
+    dev: true
+
   /unplugin-vue-components@0.28.0(vue@3.5.13):
     resolution: {integrity: sha512-jiTGtJ3JsRFBjgvyilfrX7yUoGKScFgbdNw+6p6kEXU+Spf/rhxzgvdfuMcvhCcLmflB/dY3pGQshYBVGOUx7Q==}
     engines: {node: '>=14'}
@@ -1126,7 +1139,7 @@ packages:
       vue: 3.5.13(typescript@5.6.3)
     dev: false
 
-  /vite@6.0.7:
+  /vite@6.0.7(@types/node@22.10.5):
     resolution: {integrity: sha512-RDt8r/7qx9940f8FcOIAH9PTViRrghKaK2K1jY3RaAURrEUbm9Du1mJ72G+jlhtG3WwodnfzY8ORQZbBavZEAQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
@@ -1166,6 +1179,7 @@ packages:
       yaml:
         optional: true
     dependencies:
+      '@types/node': 22.10.5
       esbuild: 0.24.2
       postcss: 8.4.49
       rollup: 4.29.1
