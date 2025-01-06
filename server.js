@@ -1,14 +1,27 @@
-// server.js
-const http = require('http-server');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const express = require('express');
 const path = require('path');
 
-const server = http.createServer({
-    root: path.join(__dirname, 'dist'),
-    port: 1998, // 自定义端口
-    showDir: false,
-    autoIndex: true,
+const app = express();
+
+// 静态文件服务
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// 代理配置
+app.use('/api', createProxyMiddleware({
+    target: 'http://lihk.serv00.net:13381/api',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': '',
+    },
+}));
+
+// 处理所有其他请求，返回 index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-server.listen(1998, 'http://91.185.189.19', () => {
-    console.log('Vue project is running at http://localhost:8080');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
