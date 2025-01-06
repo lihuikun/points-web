@@ -1,35 +1,21 @@
 <template>
   <div class="auth-container">
     <div class="header">
-      <van-image
-        round
-        width="100"
-        height="100"
-        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-      />
+      <van-image round width="100" height="100" :src="avatar" />
       <h2>每日签到</h2>
     </div>
     <van-tabs v-model:active="active" animated>
       <van-tab title="登录">
         <van-form @submit="onLogin">
           <van-cell-group inset>
-            <van-field
-              v-model="loginForm.email"
-              name="email"
-              placeholder="请输入邮箱"
-              :rules="[{ required: true, message: '请填写邮箱' }]"
-            >
+            <van-field v-model="loginForm.email" name="email" placeholder="请输入邮箱"
+              :rules="[{ required: true, message: '请填写邮箱' }]">
               <template #left-icon>
                 <van-icon name="envelop-o" class="field-icon" />
               </template>
             </van-field>
-            <van-field
-              v-model="loginForm.password"
-              type="password"
-              name="password"
-              placeholder="请输入密码"
-              :rules="[{ required: true, message: '请填写密码' }]"
-            >
+            <van-field v-model="loginForm.password" type="password" name="password" placeholder="请输入密码"
+              :rules="[{ required: true, message: '请填写密码' }]">
               <template #left-icon>
                 <van-icon name="lock" class="field-icon" />
               </template>
@@ -45,26 +31,16 @@
       <van-tab title="注册">
         <van-form @submit="onRegister">
           <van-cell-group inset>
-            <van-field
-              v-model="registerForm.email"
-              name="email"
-              placeholder="请输入邮箱"
-              :rules="[
-                { required: true, message: '请填写邮箱' },
-                { pattern: emailRegex, message: '请输入正确的邮箱格式' }
-              ]"
-            >
+            <van-field v-model="registerForm.email" name="email" placeholder="请输入邮箱" :rules="[
+              { required: true, message: '请填写邮箱' },
+              { pattern: emailRegex, message: '请输入正确的邮箱格式' }
+            ]">
               <template #left-icon>
                 <van-icon name="envelop-o" class="field-icon" />
               </template>
             </van-field>
-            <van-field
-              v-model="registerForm.password"
-              type="password"
-              name="password"
-              placeholder="请输入密码"
-              :rules="[{ required: true, message: '请填写密码' }]"
-            >
+            <van-field v-model="registerForm.password" type="password" name="password" placeholder="请输入密码"
+              :rules="[{ required: true, message: '请填写密码' }]">
               <template #left-icon>
                 <van-icon name="lock" class="field-icon" />
               </template>
@@ -86,7 +62,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast, showLoadingToast, closeToast, showSuccessToast } from 'vant'
 import { login, register } from '../api/auth'
-
+import avatar from '@/assets/img/avatar.jpg';
 const router = useRouter()
 const active = ref(0)
 const loading = ref(false)
@@ -269,4 +245,4 @@ const onRegister = async () => {
 :deep(.van-field__placeholder) {
   color: rgba(255, 255, 255, 0.5);
 }
-</style> 
+</style>

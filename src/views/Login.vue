@@ -1,33 +1,17 @@
 <template>
   <div class="login-container">
     <div class="header">
-      <van-image
-        round
-        width="100"
-        height="100"
-        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-      />
+      <van-image round width="100" height="100" :src="avatar" />
       <h2>每日签到</h2>
     </div>
     <van-form @submit="onSubmit">
       <van-cell-group inset>
-        <van-field
-          v-model="email"
-          name="email"
-          label="邮箱"
-          placeholder="请输入邮箱"
-          :rules="[{ required: true, message: '请填写邮箱' }]"
-        >
+        <van-field v-model="email" name="email" label="邮箱" placeholder="请输入邮箱"
+          :rules="[{ required: true, message: '请填写邮箱' }]">
           <template #left-icon><van-icon name="envelop-o" /></template>
         </van-field>
-        <van-field
-          v-model="password"
-          type="password"
-          name="password"
-          label="密码"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
-        >
+        <van-field v-model="password" type="password" name="password" label="密码" placeholder="请输入密码"
+          :rules="[{ required: true, message: '请填写密码' }]">
           <template #left-icon><van-icon name="lock" /></template>
         </van-field>
       </van-cell-group>
@@ -49,7 +33,7 @@ import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
 import { login } from '../api/auth'
 import type { LoginResponse } from '../api/types'
-
+import avatar from '@/assets/img/avatar.jpg';
 const router = useRouter()
 const email = ref('')
 const password = ref('')
@@ -61,13 +45,13 @@ const onSubmit = async () => {
     const res = await login(email.value, password.value)
     if (res.code === 200) {
       localStorage.setItem('token', res.data.token)
-      Toast.success('登录成功',{duration:1000})
+      Toast.success('登录成功', { duration: 1000 })
       router.push('/')
     } else {
-      Toast.fail(res.msg,{duration:3000})
+      Toast.fail(res.msg, { duration: 3000 })
     }
   } catch (error) {
-    Toast.fail('登录失败',{duration:3000})
+    Toast.fail('登录失败', { duration: 3000 })
   } finally {
     loading.value = false
   }

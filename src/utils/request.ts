@@ -1,4 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+import type { AxiosResponse } from 'axios';
+interface ApiResponse<T = any> {
+  code: number;
+  msg: string;
+  data: T;
+}
 
 const request = axios.create({
   //使用vite的代理的/api
@@ -20,7 +26,7 @@ request.interceptors.request.use(
 )
 
 request.interceptors.response.use(
-  response => response.data,
+  (response: AxiosResponse<ApiResponse>) => response,
   error => {
     return Promise.reject(error)
   }

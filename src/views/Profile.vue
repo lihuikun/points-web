@@ -3,12 +3,8 @@
     <!-- 用户信息卡片 -->
     <div class="profile-content">
       <div class="user-card" @click="showEditDialog = true">
-        <van-image
-          round
-          width="80"
-          height="80"
-          :src="userInfo.avatar || 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'"
-        />
+        <!-- <van-image round width="80" height="80" :src="userInfo.avatar || '@/assets/img/avatar.jpg'" /> -->
+        <van-image round width="80" height="80" :src="avatar" />
         <div class="user-info">
           <h3 class="nickname">{{ userInfo.nickname || userInfo.email?.split('@')[0] }}</h3>
           <p class="email">{{ userInfo.email }}</p>
@@ -22,12 +18,7 @@
 
       <!-- 功能模块 -->
       <van-cell-group inset class="feature-group">
-          <van-cell 
-            center 
-            title="连续签到" 
-            icon="clock-o"
-            :value="`${userInfo.continuousDays}天`"
-          />
+        <van-cell center title="连续签到" icon="clock-o" :value="`${userInfo.continuousDays}天`" />
         <van-cell center title="每日签到" icon="sign" is-link to="/">
           <template #right-icon>
             <van-tag type="primary" v-if="userInfo.isCheckedIn">已签到</van-tag>
@@ -37,98 +28,39 @@
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
-        <van-cell 
-          center 
-          title="积分记录" 
-          icon="balance-list-o" 
-          is-link 
-          to="/history" 
-        />
-        <van-cell 
-          center 
-          title="礼品兑换" 
-          icon="gift-o" 
-          is-link 
-          to="/lottery"
-        />
+        <van-cell center title="积分记录" icon="balance-list-o" is-link to="/history" />
+        <van-cell center title="礼品兑换" icon="gift-o" is-link to="/lottery" />
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
-        <van-cell 
-          center 
-          title="修改密码" 
-          icon="setting-o" 
-          is-link 
-          @click="showPasswordDialog = true"
-        />
-        <van-cell 
-          center 
-          title="退出登录" 
-          icon="close" 
-          @click="handleLogout"
-          class="logout-cell"
-        />
+        <van-cell center title="修改密码" icon="setting-o" is-link @click="showPasswordDialog = true" />
+        <van-cell center title="退出登录" icon="close" @click="handleLogout" class="logout-cell" />
       </van-cell-group>
 
       <!-- 修改密码弹窗 -->
-      <van-dialog
-        v-model:show="showPasswordDialog"
-        title="修改密码"
-        show-cancel-button
-        @confirm="handleChangePassword"
-        :before-close="handlePasswordDialogClose"
-      >
+      <van-dialog v-model:show="showPasswordDialog" title="修改密码" show-cancel-button @confirm="handleChangePassword"
+        :before-close="handlePasswordDialogClose">
         <van-form @submit.prevent>
-          <van-field
-            v-model="passwordForm.oldPassword"
-            type="password"
-            label="原密码"
-            placeholder="请输入原密码"
-            :rules="[{ required: true, message: '请输入原密码' }]"
-          />
-          <van-field
-            v-model="passwordForm.newPassword"
-            type="password"
-            label="新密码"
-            placeholder="请输入新密码"
-            :rules="[{ required: true, message: '请输入新密码' }]"
-          />
-          <van-field
-            v-model="passwordForm.confirmPassword"
-            type="password"
-            label="确认密码"
-            placeholder="请再次输入新密码"
-            :rules="[
-              { required: true, message: '请确认新密码' },
-              { validator: validatePassword, message: '两次输入的密码不一致' }
-            ]"
-          />
+          <van-field v-model="passwordForm.oldPassword" type="password" label="原密码" placeholder="请输入原密码"
+            :rules="[{ required: true, message: '请输入原密码' }]" />
+          <van-field v-model="passwordForm.newPassword" type="password" label="新密码" placeholder="请输入新密码"
+            :rules="[{ required: true, message: '请输入新密码' }]" />
+          <van-field v-model="passwordForm.confirmPassword" type="password" label="确认密码" placeholder="请再次输入新密码" :rules="[
+            { required: true, message: '请确认新密码' },
+            { validator: validatePassword, message: '两次输入的密码不一致' }
+          ]" />
         </van-form>
       </van-dialog>
 
       <!-- 编辑用户信息弹窗 -->
-      <van-dialog
-        v-model:show="showEditDialog"
-        title="编辑个人信息"
-        show-cancel-button
-        @confirm="handleUpdateInfo"
-        :before-close="handleEditDialogClose"
-      >
+      <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo"
+        :before-close="handleEditDialogClose">
         <van-form @submit.prevent>
-          <van-field
-            v-model="editForm.nickname"
-            label="昵称"
-            placeholder="请输入昵称"
-          />
-          <van-field
-            v-model="editForm.email"
-            label="邮箱"
-            placeholder="请输入邮箱"
-            :rules="[
-              { required: true, message: '请填写邮箱' },
-              { pattern: emailRegex, message: '请输入正确的邮箱格式' }
-            ]"
-          />
+          <van-field v-model="editForm.nickname" label="昵称" placeholder="请输入昵称" />
+          <van-field v-model="editForm.email" label="邮箱" placeholder="请输入邮箱" :rules="[
+            { required: true, message: '请填写邮箱' },
+            { pattern: emailRegex, message: '请输入正确的邮箱格式' }
+          ]" />
         </van-form>
       </van-dialog>
     </div>
@@ -141,7 +73,7 @@ import { useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
 import { getUserInfo, updateUserInfo } from '../api/user'
 import type { UserInfo } from '../types'
-
+import avatar from '@/assets/img/avatar.jpg';
 const router = useRouter()
 const userInfo = ref<UserInfo>({} as UserInfo)
 const showPasswordDialog = ref(false)
@@ -344,4 +276,4 @@ onMounted(async () => {
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
 }
-</style> 
+</style>
