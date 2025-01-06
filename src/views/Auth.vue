@@ -87,13 +87,15 @@ const onLogin = async () => {
       duration: 0
     })
     const res = await login(loginForm.value.email, loginForm.value.password)
+    console.log("🚀 ~ onLogin ~ res:", res)
     if (res.code === 200) {
       localStorage.setItem('token', res.data.token)
+      console.log("🚀 ~ onLogin ~ res.data.token:", res.data.token)
       showSuccessToast({
         message: '登录成功',
         duration: 2000,
         onClose: () => {
-          router.push('/')
+          router.push('/home')
         }
       })
     } else {
@@ -104,6 +106,8 @@ const onLogin = async () => {
       })
     }
   } catch (error) {
+    console.log("🚀 ~ onLogin ~ res.data.token:", error)
+
     showToast({
       message: '登录失败',
       icon: 'fail',

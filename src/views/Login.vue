@@ -32,7 +32,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
 import { login } from '../api/auth'
-import type { LoginResponse } from '../api/types'
 import avatar from '@/assets/img/avatar.jpg';
 const router = useRouter()
 const email = ref('')
@@ -45,12 +44,14 @@ const onSubmit = async () => {
     const res = await login(email.value, password.value)
     if (res.code === 200) {
       localStorage.setItem('token', res.data.token)
+      console.log("🚀 ~ onSubmit ~ res.data.token:", res.data.token)
       Toast.success('登录成功', { duration: 1000 })
-      router.push('/')
+      router.push('/home')
     } else {
       Toast.fail(res.msg, { duration: 3000 })
     }
   } catch (error) {
+    console.log("🚀 ~ onSubmit ~ error:", error)
     Toast.fail('登录失败', { duration: 3000 })
   } finally {
     loading.value = false
