@@ -122,6 +122,7 @@ const startLottery = () => {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.05);
+    max-height: 95px;
 }
 
 .grid-item.active {
