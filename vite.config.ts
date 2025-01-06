@@ -14,8 +14,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://lihk.serv00.net:13381',
-        changeOrigin: true
+        target: 'http://lihk.serv00.net:13381/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '') // 可选：重写路径
       }
     }
   }

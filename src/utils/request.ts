@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://lihk.serv00.net:13381/api',
+  //使用vite的代理的/api
+  baseURL: '/api',
   timeout: 5000
 })
 
