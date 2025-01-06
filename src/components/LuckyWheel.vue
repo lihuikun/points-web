@@ -38,12 +38,52 @@ const rotation = ref(0)
 const isSpinning = ref(false)
 
 const initLotteryConfig = async () => {
-    try {
-        const response = await getLotteryConfig()
-        prizes.value = response.data.data.prizes
-    } catch (error) {
-        showToast('获取抽奖配置失败')
-    }
+    prizes.value = [{
+        name: '一等奖',
+        probability: 0.1,
+        color: '#FFD700'
+    }, {
+        name: '二等奖',
+        probability: 0.2,
+        color: '#FFA500'
+    }, {
+        name: '三等奖',
+        probability: 0.3,
+        color: '#FF4500'
+    }, {
+        name: '四等奖',
+        probability: 0.4,
+        color: '#FF4500'
+    }, {
+        name: '五等奖',
+        probability: 0.5,
+        color: '#FF4500'
+    }, {
+        name: '六等奖',
+        probability: 0.6,
+        color: '#FF4500'
+    }, {
+        name: '七等奖',
+        probability: 0.7,
+        color: '#FF4500'
+    }, {
+        name: '八等奖',
+        probability: 0.8,
+        color: '#FF4500'
+    }, {
+        name: '九等奖',
+        probability: 0.9,
+        color: '#FF4500'
+    }, {
+        name: '十等奖',
+        probability: 1,
+        color: '#FF4500'
+    }]
+    // try {
+    //     const response = await getLotteryConfig()
+    // } catch (error) {
+    //     showToast('获取抽奖配置失败')
+    // }
 }
 
 const handleLottery = async () => {

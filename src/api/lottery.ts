@@ -1,3 +1,4 @@
+import type { ApiResponse } from '../types';
 import request from '../utils/request'
 
 export interface LotteryResult {
@@ -16,10 +17,10 @@ export interface LotteryConfig {
     cost: number;
 }
 
-export const startLottery = () => {
-    return request.post<{ data: LotteryResult }>('/lottery/draw')
+export const startLottery = (): Promise<ApiResponse<any>> => {
+    return request.post('/lottery/draw')
 }
 
-export const getLotteryConfig = () => {
-    return request.get<{ data: LotteryConfig }>('/lottery/config')
+export const getLotteryConfig = (): Promise<ApiResponse<any>> => {
+    return request.get('/lottery/config')
 } 
