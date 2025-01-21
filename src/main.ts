@@ -6,6 +6,9 @@ import App from './App.vue'
 // 引入 Vant
 import Vant from 'vant'
 import 'vant/lib/index.css'
+import "vant/es/toast/style"
+import "vant/es/dialog/style"
+import "vant/es/image-preview/style"
 
 const app = createApp(App)
 

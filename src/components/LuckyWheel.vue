@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { showToast } from 'vant'
+import 'vant/lib/toast/style'
 import { drawLottery } from '../api/lottery'
 import type { UserInfo } from '../types';
 // 奖品列表
@@ -53,7 +54,6 @@ const startLottery = async () => {
   if (isRunning.value) return
   if (userInfo.value.points < 200) return showToast({
     message: '积分不足200，请先签到或做任务获取积分',
-    position: 'middle',
     duration: 2000
   })
   // 调用后端接口
