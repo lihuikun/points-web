@@ -1,11 +1,11 @@
-import type { ApiResponse } from '../types'
+import type { ApiResponse, UserInfo } from '../types'
 import request from '../utils/request'
 
 export const checkIn = () => {
   return request.post('/checkin')
 }
 
-export const getUserInfo = (): Promise<ApiResponse<any>> => {
+export const getUserInfo = (): Promise<ApiResponse<UserInfo>> => {
   return request.get('/user/info')
 }
 

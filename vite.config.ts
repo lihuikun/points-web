@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
-
+import AutoImport from "unplugin-auto-import/vite";
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
@@ -11,6 +11,14 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
+      AutoImport({
+        imports: ["vue"],
+        dts: "src/auto-imports.d.ts", // 指定生成的类型声明文件路径
+        eslintrc: {
+          enabled: true, // 如果使用 ESLint，开启此选项
+          filepath: "./.eslintrc-auto-import.json",
+        },
+      }),
       Components({
         resolvers: [VantResolver()]
       })

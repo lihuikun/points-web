@@ -1,15 +1,14 @@
 <template>
   <div class="lottery-page">
-    <van-nav-bar title="幸运抽奖" left-arrow @click-left="$router.back()" />
-
     <div class="lottery-content">
       <div class="points-display">
-        <van-cell title="我的积分" :value="userPoints" />
+        <van-cell title="我的积分" :value="userInfo.points" />
         <van-cell title="抽奖消耗" :value="cost + '积分/次'" />
+        <van-cell title="抽奖历史" is-link @click="() => $router.push('/history')"/>
       </div>
 
       <div class="wheel-container">
-        <LuckyWheel />
+        <LuckyWheel v-model:userInfo="userInfo" :prizes="prizes"/>
       </div>
 
       <div class="prize-rules">
@@ -18,9 +17,9 @@
             <p>1. 每次抽奖消耗 {{ cost }} 积分</p>
             <p>2. 奖品包含：</p>
             <ul>
-              <li v-for="(prize, index) in prizes" :key="index">
-                {{ prize.name }}
-              </li>
+              <span v-for="(prize, index) in prizes" :key="index" style="margin-right: 5px;">
+                {{ prize.value }}
+              </span>
             </ul>
           </van-collapse-item>
         </van-collapse>
@@ -30,16 +29,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import LuckyWheel from '../components/LuckyWheel.vue'
 import { getLotteryConfig } from '../api/lottery'
-import type { LotteryConfig } from '../api/lottery'
+import { getUserInfo } from '../api/user'
+import type { UserInfo } from '../types'
 
 const activeCollapse = ref(['1'])
-const userPoints = ref(1000)
+const userInfo = ref<UserInfo>({
+points: 0,
+id: 0,
+email: '',
+isCheckedIn: false,
+continuousDays: 0
+})
+// 奖品列表
+const prizes = ref([
+  { label: '一等奖', value: 'iphone手机', index: 0 },
+  { label: '二等奖', value: '黄金1g', index: 1 },
+  { label: '三等奖', value: '惊喜礼物', index: 2 },
+  { label: '四等奖', value: '52元', index: 3 },
+  { label: '', value: '' }, // 中间按钮位置
+  { label: '五等奖', value: '彩票一张', index: 5 },
+  { label: '六等奖', value: '13.14元', index: 6 },
+  { label: '七等奖', value: '5.20元', index: 7 },
+  { label: '八等奖', value: '随机积分', index: 8 },
+])
 const cost = ref(200)
-const prizes = ref<LotteryConfig['prizes']>([])
-
 const initLotteryData = async () => {
   try {
     const { data } = await getLotteryConfig()
@@ -49,9 +64,13 @@ const initLotteryData = async () => {
     console.error('获取抽奖配置失败:', error)
   }
 }
-
+async function getUser() {
+  const { data } = await getUserInfo()
+  userInfo.value = data!
+}
 onMounted(() => {
   initLotteryData()
+  getUser()
 })
 </script>
 
