@@ -4,11 +4,11 @@
       <div class="points-display">
         <van-cell title="我的积分" :value="userInfo.points" />
         <van-cell title="抽奖消耗" :value="cost + '积分/次'" />
-        <van-cell title="抽奖历史" is-link @click="() => $router.push('/lottery-history')"/>
+        <van-cell title="抽奖历史" is-link @click="() => $router.push('/lottery-history')" />
       </div>
 
       <div class="wheel-container">
-        <LuckyWheel v-model:userInfo="userInfo" :prizes="prizes"/>
+        <LuckyWheel v-model:userInfo="userInfo" :prizes="prizes" />
       </div>
 
       <div class="prize-rules">
@@ -36,11 +36,11 @@ import type { UserInfo } from '../types'
 
 const activeCollapse = ref(['1'])
 const userInfo = ref<UserInfo>({
-points: 0,
-id: 0,
-email: '',
-isCheckedIn: false,
-continuousDays: 0
+  points: 0,
+  id: 0,
+  email: '',
+  isCheckedIn: false,
+  continuousDays: 0
 })
 // 奖品列表
 const prizes = ref([
@@ -71,6 +71,8 @@ async function getUser() {
 onMounted(() => {
   // initLotteryData()
   getUser()
+  // 将prizes存入到localStorage
+  localStorage.setItem('prizes', JSON.stringify(prizes.value))
 })
 </script>
 
