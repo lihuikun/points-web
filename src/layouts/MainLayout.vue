@@ -1,10 +1,12 @@
 <template>
   <div class="layout-container">
     <!-- NavBar 头部导航栏 -->
-    <van-nav-bar :title="title" left-arrow @click-left="$router.back()" />
+     <div class="nav-bar">
+       <van-nav-bar v-if="title" :title="title" left-arrow @click-left="$router.back()" />
+     </div>
     
     <!-- 内容区域（可滚动） -->
-    <div class="content" style="flex: 1; overflow-y: auto;">
+    <div class="content">
       <router-view />
     </div>
 
@@ -49,24 +51,16 @@ watch(
 
 // 通过路由动态获取标题
 const title = computed(() => {
-  switch (route.path) {
-    case '/lottery':
-      return '抽奖'
-    case '/tasks':
-      return '任务'
-    case '/profile':
-      return '我的'
-    default:
-      return '幸运抽奖'
-  }
+  return route.meta.title
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .layout-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  justify-content: center;
+  height: 100vh;
 }
 
 .content {
@@ -74,11 +68,7 @@ const title = computed(() => {
   overflow-y: auto;
 }
 
-.van-nav-bar {
-  z-index: 10;
-}
-
-.van-tabbar {
-  z-index: 10;
+.nav-bar {
+  width: 100%;
 }
 </style>

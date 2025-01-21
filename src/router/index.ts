@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '../layouts/MainLayout.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import MainLayout from '@/layouts/MainLayout.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/auth',
@@ -23,7 +23,7 @@ const router = createRouter({
           path: 'lottery',
           name: 'Lottery',
           component: () => import('../views/Lottery.vue'),
-          meta: { requiresAuth: true }
+          meta: { title: '幸运抽奖', requiresAuth: true }
         },
         {
           path: 'tasks',
