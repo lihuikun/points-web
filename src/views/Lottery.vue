@@ -55,21 +55,21 @@ const prizes = ref([
   { label: '八等奖', value: '随机积分', index: 8 },
 ])
 const cost = ref(200)
-const initLotteryData = async () => {
-  try {
-    const { data } = await getLotteryConfig()
-    prizes.value = data.prizes
-    cost.value = data.cost
-  } catch (error) {
-    console.error('获取抽奖配置失败:', error)
-  }
-}
+// const initLotteryData = async () => {
+//   try {
+//     const { data } = await getLotteryConfig()
+//     prizes.value = data.prizes
+//     cost.value = data.cost
+//   } catch (error) {
+//     console.error('获取抽奖配置失败:', error)
+//   }
+// }
 async function getUser() {
   const { data } = await getUserInfo()
   userInfo.value = data!
 }
 onMounted(() => {
-  initLotteryData()
+  // initLotteryData()
   getUser()
 })
 </script>
