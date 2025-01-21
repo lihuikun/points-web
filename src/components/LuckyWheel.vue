@@ -71,15 +71,15 @@ const startLottery = async () => {
       isRunning.value = false
 
       const randomIndex = prizes.value.find(item => item.label === data!.name)?.index!
-      activeIndex.value = randomIndex
+      activeIndex.value = randomIndex as number
       userInfo.value.points = data!.points
 
       // 显示中奖信息
-      const prize = prizes.value[randomIndex]
+      const prize = prizes.value[randomIndex as number]
+      const str = `恭喜获得${data.name}: ${data.value ? `${data.value}积分` : prize.value}`
+      console.log("🚀 ~ interval ~ str:", str, data)
       showToast({
-        message: prize.value
-          ? `恭喜获得${prize.label}: ${prize.value}`
-          : prize.label,
+        message: str,
         position: 'middle',
         duration: 2000
       })
