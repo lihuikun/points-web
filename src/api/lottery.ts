@@ -27,6 +27,6 @@ export const getLotteryConfig = (): Promise<ApiResponse<any>> => {
 export const drawLottery = (data: { userId: string }): Promise<ApiResponse<LotteryResult>> => {
   return request.post('/user/draw', data)
 }
-export const getLotteryHistory = (): Promise<ApiResponse<any>> => {
-  return request.get('/user/draw/history')
+export const getLotteryHistory = (params): Promise<ApiResponse<any>> => {
+  return request.get('/user/draw/history', { params })
 }

@@ -4,7 +4,7 @@
       <div class="points-display">
         <van-cell title="我的积分" :value="userInfo.points" />
         <van-cell title="抽奖消耗" :value="cost + '积分/次'" />
-        <van-cell title="抽奖历史" is-link @click="() => $router.push('/history')"/>
+        <van-cell title="抽奖历史" is-link @click="() => $router.push('/lottery-history')"/>
       </div>
 
       <div class="wheel-container">

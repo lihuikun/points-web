@@ -63,6 +63,7 @@ import { useRouter } from 'vue-router'
 import { showToast, showLoadingToast, closeToast, showSuccessToast } from 'vant'
 import { login, register } from '../api/auth'
 import avatar from '@/assets/img/avatar.jpg';
+import { getUserInfo } from '@/api/user'
 const router = useRouter()
 const active = ref(0)
 const loading = ref(false)
@@ -90,6 +91,8 @@ const onLogin = async () => {
     console.log("🚀 ~ onLogin ~ res:", res)
     if (res.code === 200) {
       localStorage.setItem('token', res.data.token)
+      const { data } = await getUserInfo()
+      localStorage.setItem('userInfo', JSON.stringify(data))
       console.log("🚀 ~ onLogin ~ res.data.token:", res.data.token)
       showSuccessToast({
         message: '登录成功',

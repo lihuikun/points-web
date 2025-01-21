@@ -51,6 +51,11 @@ const activeIndex = ref<number | null>(null)
 const isRunning = ref(false)
 const startLottery = async () => {
   if (isRunning.value) return
+  if (userInfo.value.points < 200) return showToast({
+    message: '积分不足200，请先签到或做任务获取积分',
+    position: 'middle',
+    duration: 2000
+  })
   // 调用后端接口
   const { data } = await drawLottery({ userId: userInfo.value.id.toString() })
   console.log("🚀 ~ interval ~ res:", data)
