@@ -1,172 +1,108 @@
 <template>
   <div class="home-container">
-    <van-nav-bar title="每日签到" left-arrow @click-left="router.back()" />
-
-    <div class="user-info">
-      <div class="continuous-days">
-        <div class="circle-text">
-          <div class="title">连续签到</div>
-          <span class="days">{{ continuousDays }}</span>
-          <span class="label">天</span>
-        </div>
-      </div>
-
-      <div class="points-info">
-        <van-tag type="primary" size="large">当前积分: {{ points }}</van-tag>
-      </div>
-    </div>
-
-    <div class="checkin-card">
-      <van-card class="custom-card">
-        <template #title>
-          <div class="card-title">
-            <van-icon name="gift-o" size="24" color="#ff6b6b" />
-            <span>今日签到奖励</span>
-          </div>
-        </template>
-        <template #desc>
-          <div class="rewards-info">
-            <p>连续签到奖励规则：</p>
-            <p>3天：400积分</p>
-            <p>7天：800积分</p>
-            <p>15天：1000积分</p>
-          </div>
-        </template>
-        <template #footer>
-          <van-button :type="isCheckedIn ? 'default' : 'primary'" size="large" @click="handleCheckIn"
-            :disabled="isCheckedIn" :loading="loading">
-            {{ isCheckedIn ? '今日已签到' : '立即签到' }}
+    <FlipCard>
+      <template #front>
+        <div class="front-card" :style="{'background-image': `url(${cardData.imageUrl})`}">
+          <!-- <img class="img-card" :src="cardData.imageUrl" alt=""> -->
+          <van-button class="btn" color="linear-gradient(to right, #ff6034, #ee0a24)" round size="small">
+            翻转查看天气
           </van-button>
-        </template>
-      </van-card>
-    </div>
-
-    <van-cell-group class="action-group">
-      <van-cell title="查看历史记录" is-link to="/history" />
-    </van-cell-group>
+        </div>
+      </template>
+      <template #back>
+        <div class="back-card">
+          <p>{{ cardData.city }}</p>
+          <p>{{ cardData.weather }}</p>
+          <p>{{ cardData.temperature }}</p>
+        </div>
+      </template>
+    </FlipCard>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { showToast, showDialog, showSuccessToast } from 'vant'
-import { useRouter } from 'vue-router'
-import { checkIn, getUserInfo } from '../api/user'
+<script lang="ts" setup>
+import FlipCard from '@/components/FlipCard.vue';
+import { getWeather, Weather } from '@/api/weather'
 
-const router = useRouter()
-const points = ref(0)
-const continuousDays = ref(0)
-const isCheckedIn = ref(false)
-const loading = ref(false)
-const circleValue = ref(0)
-
-const handleCheckIn = async () => {
-  if (loading.value) return
-  loading.value = true
-  try {
-    const res = await checkIn()
-    if (res.code === 200) {
-      showSuccessToast('签到成功')
-      points.value = res.data.totalPoints
-      continuousDays.value = res.data.continuousDays
-      isCheckedIn.value = true
-      circleValue.value = (continuousDays.value / 15) * 100
-    } else {
-      showToast(res.msg)
-    }
-  } catch (error) {
-    showToast('签到失败')
-  } finally {
-    loading.value = false
-  }
+const cardData = ref<Weather>({
+  id: 0,
+  cityCode: '',
+  date: '',
+  city: '',
+  temperature: '',
+  weather: '',
+  imageUrl: '',
+  description: ''
+})
+function getWeatherData() {
+  getWeather({ cityCode: '101280601' }).then(res => {
+    console.log(res)
+    cardData.value = res.data
+  })
 }
-
-onMounted(async () => {
-  const res = await getUserInfo()
-  if (res.code === 200) {
-    points.value = res.data.points
-    continuousDays.value = res.data.continuousDays
-    isCheckedIn.value = res.data.isCheckedIn
-    circleValue.value = (continuousDays.value / 15) * 100
-  }
+onMounted(() => {
+  getWeatherData()
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .home-container {
-  min-height: 100vh;
-  background: #f7f8fa;
-}
-
-.user-info {
-  padding: 20px;
-  text-align: center;
-  background: white;
-  margin-bottom: 12px;
-}
-
-.continuous-days {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.continuous-days .title {
-  font-size: 16px;
-  color: #666;
-}
-
-.circle-text {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 12px 24px;
-}
-
-.days {
-  font-size: 28px;
-  font-weight: bold;
-  color: #1989fa;
-  line-height: 1;
-}
-
-.label {
-  font-size: 14px;
-  color: #666;
-  margin-left: 2px;
-}
-
-.points-info {
-  margin-top: 16px;
-}
-
-.checkin-card {
-  margin: 12px;
-}
-
-.custom-card {
-  background: white;
-  border-radius: 8px;
-  padding: 16px;
-}
-
-.card-title {
-  display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  color: #323233;
+  height: 100%;
+  width: 100vw;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);;
+  backdrop-filter: blur(10px); /* 毛玻璃效果 */
+  -webkit-backdrop-filter: blur(10px); /* 支持 Safari */
+  position: relative; /* 确保毛玻璃效果只应用在背景 */
+  color: #fff; /* 文本颜色 */
 }
 
-.rewards-info {
-  color: #666;
-  font-size: 14px;
-  line-height: 1.5;
+.img-card {
+  width: 100%;
+  height: 100%;
 }
 
-.action-group {
-  margin-top: 12px;
+.back-card {
+  padding: 0 15px;
+}
+
+.front-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  .btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* 卡片的容器，带有半透明背景 */
+.flip-card {
+  background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px); /* 轻微的毛玻璃效果 */
+  -webkit-backdrop-filter: blur(8px); /* 支持 Safari */
+}
+
+/* 前卡片的内容 */
+.flip-card-front {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 后卡片的内容 */
+.flip-card-back {
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 </style>

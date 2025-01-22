@@ -20,6 +20,12 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
         {
+          path: 'sign-in',
+          name: 'sign-in',
+          component: () => import('../views/SignIn.vue'),
+          meta: { title: '每日签到', requiresAuth: true }
+        },
+        {
           path: 'lottery',
           name: 'Lottery',
           component: () => import('../views/Lottery.vue'),

@@ -19,7 +19,7 @@
       <!-- 功能模块 -->
       <van-cell-group inset class="feature-group">
         <van-cell center title="连续签到" icon="clock-o" :value="`${userInfo.continuousDays}天`" />
-        <van-cell center title="每日签到" icon="sign" is-link to="/">
+        <van-cell center title="每日签到" icon="sign" is-link to="/sign-in">
           <template #right-icon>
             <van-tag type="primary" v-if="userInfo.isCheckedIn">已签到</van-tag>
             <van-tag type="warning" v-else>未签到</van-tag>

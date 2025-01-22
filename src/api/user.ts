@@ -1,7 +1,7 @@
 import type { ApiResponse, UserInfo } from '../types'
 import request from '../utils/request'
 
-export const checkIn = () => {
+export const checkIn = (): Promise<ApiResponse<any>> => {
   return request.post('/checkin')
 }
 

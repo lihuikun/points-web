@@ -32,7 +32,7 @@ watch(
   () => route.path,
   (path) => {
     switch (path) {
-      case '/':
+      case '/home':
         active.value = 0
         break
       case '/lottery':
@@ -65,7 +65,7 @@ const title = computed(() => {
 
 .content {
   flex: 1;
-  padding-bottom: 50px;
+  // padding-bottom: 50px;
   overflow-y: auto;
 }
 

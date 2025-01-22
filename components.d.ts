@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FlipCard: typeof import('./src/components/FlipCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     LuckyWheel: typeof import('./src/components/LuckyWheel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
