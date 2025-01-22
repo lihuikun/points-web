@@ -65,7 +65,6 @@ const title = computed(() => {
 
 .content {
   flex: 1;
-  // padding-bottom: 50px;
   overflow-y: auto;
 }
 
