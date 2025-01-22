@@ -35,7 +35,7 @@ const userId = JSON.parse(localStorage.getItem('userInfo') || '{}').id;
 // 拿到今天的日期
 const today = new Date().toISOString().split('T')[0];
 // 生成二维码的地址
-const qrcodeUrl = `${url}#/share?id=${userId}&date=${today}&type=分享`;
+const qrcodeUrl = `${url}#/share?userId=${userId}&date=${today}&type=分享`;
 
 const weatherInfo = ref(JSON.parse(localStorage.getItem(`${today}-weatherInfo`)))
 const contentToImage = ref(null)
