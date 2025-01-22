@@ -12,6 +12,7 @@ declare module 'vue' {
     LuckyWheel: typeof import('./src/components/LuckyWheel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Share: typeof import('./src/components/Share.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']

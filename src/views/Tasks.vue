@@ -1,22 +1,28 @@
 <template>
   <div class="tasks-container">
-    <van-nav-bar title="每日任务" />
     <van-cell-group inset>
-      <van-cell title="每日签到" :value="isCheckedIn ? '已完成' : '未完成'" />
-      <van-cell title="分享任务" value="未完成" />
+      <van-cell title="每日签到" :value="isCheckedIn ? '已完成' : '未完成'" to="/sign-in" />
+      <van-cell title="分享任务" value="+10积分" @click="share" />
       <van-cell title="邀请好友" value="未完成" />
     </van-cell-group>
+    <Share v-model:show="showShare"></Share>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getUserInfo } from '../api/user'
+import Share from '../components/Share.vue'
 
-const isCheckedIn = ref(false)
-
+const isCheckedIn = ref(JSON.parse(localStorage.getItem('userInfo') || '{}').isCheckedIn || false)
+const showShare = ref(false)
+function share() {
+  showShare.value = true
+}
 onMounted(async () => {
   const res = await getUserInfo()
+  // 将其存到本地缓存
+  localStorage.setItem('userInfo', JSON.stringify(res.data))
   if (res.code === 200) {
     isCheckedIn.value = res.data.isCheckedIn
   }
@@ -27,6 +33,5 @@ onMounted(async () => {
 .tasks-container {
   padding: 12px;
   background: #f7f8fa;
-  min-height: 100vh;
 }
 </style> 

@@ -66,6 +66,8 @@ const cost = ref(200)
 // }
 async function getUser() {
   const { data } = await getUserInfo()
+  // 将其存到本地缓存
+  localStorage.setItem('userInfo', JSON.stringify(data))
   userInfo.value = data!
 }
 onMounted(() => {

@@ -41,7 +41,7 @@ const router = createRouter({
           path: 'tasks',
           name: 'Tasks',
           component: () => import('../views/Tasks.vue'),
-          meta: { requiresAuth: true }
+          meta: { title: '每日任务', requiresAuth: true }
         },
         {
           path: 'profile',

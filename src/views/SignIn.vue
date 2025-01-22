@@ -86,6 +86,8 @@ const handleCheckIn = async () => {
 
 onMounted(async () => {
   const res = await getUserInfo()
+  // 将其存到本地缓存
+  localStorage.setItem('userInfo', JSON.stringify(res.data))
   if (res.code === 200) {
     points.value = res.data.points
     continuousDays.value = res.data.continuousDays

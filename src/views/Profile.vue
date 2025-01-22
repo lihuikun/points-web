@@ -75,7 +75,7 @@ import { getUserInfo, updateUserInfo } from '../api/user'
 import type { UserInfo } from '../types'
 import avatar from '@/assets/img/avatar.jpg';
 const router = useRouter()
-const userInfo = ref<UserInfo>({} as UserInfo)
+const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem('userInfo')))
 const showPasswordDialog = ref(false)
 const showEditDialog = ref(false)
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -147,6 +147,8 @@ const handleUpdateInfo = async () => {
     if (res.code === 200) {
       showToast('更新成功')
       const userRes = await getUserInfo()
+      // 将其存到本地缓存
+      localStorage.setItem('userInfo', JSON.stringify(res.data))
       if (userRes.code === 200) {
         userInfo.value = userRes.data
       }
@@ -161,6 +163,8 @@ const handleUpdateInfo = async () => {
 onMounted(async () => {
   try {
     const res = await getUserInfo()
+    // 将其存到本地缓存
+    localStorage.setItem('userInfo', JSON.stringify(res.data))
     if (res.code === 200) {
       userInfo.value = res.data
       editForm.value = {
