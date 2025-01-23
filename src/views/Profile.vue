@@ -4,7 +4,7 @@
     <div class="profile-content">
       <div class="user-card" @click="showEditDialog = true">
         <!-- <van-image round width="80" height="80" :src="userInfo.avatar || '@/assets/img/avatar.jpg'" /> -->
-        <van-image round width="80" height="80" :src="avatar" />
+        <van-image round width="80" height="80" :src="userInfo.avatar || avatar" fit="cover" />
         <div class="user-info">
           <h3 class="nickname">{{ userInfo.nickname || userInfo.email?.split('@')[0] }}</h3>
           <p class="email">{{ userInfo.email }}</p>
