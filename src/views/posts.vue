@@ -76,9 +76,16 @@ async function deletePost(id) {
 }
 const formatDate = (isoDate: string) => {
   if (!isoDate) return '';
-  const date = new Date(isoDate);
-  return date.toISOString().replace('T', ' ').substring(0, 19); // 转换为本地时间格式
+  
+  // 加8小时
+  const date = new Date(new Date(isoDate).getTime() + 8 * 60 * 60 * 1000);
+  
+  return date.toISOString().replace('T', ' ').substring(0, 19);
 };
+
+// 测试用例
+console.log(formatDate('2025-01-22T16:00:00Z')); // 输出：2025-01-23 00:00:00
+
 async function refresh() {
   pullToRefreshListRef.value.fetchData(true);
 }
