@@ -1,17 +1,19 @@
 <template>
   <van-nav-bar title="朋友圈" left-arrow @click-left="$router.back()" class="nav-bar">
     <template #right>
-      <van-icon name="plus" @click="addPost"/>
+      <van-icon name="plus" @click="addPost" />
     </template>
   </van-nav-bar>
   <div class="friend-circle">
     <PullToRefreshList class="pullToRefreshList" ref="pullToRefreshListRef" :fetchDataFn="getTableData" :pageSize="10">
       <template v-slot:item="{ tableData }">
-        <div v-for="item in tableData" :key="item.id" class="post-item">
-          <div class="user-info">
-            <van-image class="user-avatar" :src="item.user.avatar || avatar" round width="40px" height="40px"
-              fit="cover" />
-            <span class="user-name">{{ item.user.nickname }}</span>
+        <div v-for="item in tableData" :key="item.id" class="post-item" :class="{ 'self-post-item': item.userId === userInfo.id }">
+          <div class="user-info-box" :class="{ 'self-post': item.userId === userInfo.id }">
+            <div class="user-info">
+              <van-image class="user-avatar" :src="item.user.avatar || avatar" round width="40px" height="40px"
+                fit="cover" />
+              <span class="user-name">{{ item.user.nickname }}</span>
+            </div>
           </div>
           <div class="post-content">
             <p>{{ item.content }}</p>
@@ -79,7 +81,7 @@ async function deletePost(id) {
 async function refresh() {
   pullToRefreshListRef.value.fetchData(true);
 }
-function addPost(){
+function addPost() {
   postPopupRef.value.openPopup();
 }
 </script>
@@ -94,21 +96,22 @@ function addPost(){
 }
 
 .post-item {
-  background-color: #fff;
+  background-color: #f9e6ff;
   border-radius: 8px;
   margin-bottom: 16px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+.user-info-box{
+  display: flex;
+  justify-content: space-between;
+}
 .user-info {
   display: flex;
+  width: 100%;
   align-items: center;
   margin-bottom: 12px;
-
-  .user-avatar {
-    margin-right: 10px;
-  }
+  gap: 10px;
 
   .user-name {
     font-size: 16px;
@@ -163,5 +166,17 @@ function addPost(){
 .nav-bar {
   position: fixed;
   width: 100%;
+}
+
+.self-post {
+  display: flex;
+  text-align: right;
+  .user-info{
+    flex-direction: row-reverse;
+
+  }
+}
+.self-post-item{
+  background-color: #fff8e7;
 }
 </style>
