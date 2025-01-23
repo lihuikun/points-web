@@ -12,6 +12,7 @@ export interface UserInfo {
   continuousDays: number;
   nickname?: string;
   avatar?: string;
+  role?: string;
 }
 
 export interface CheckInHistory {

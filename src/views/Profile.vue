@@ -26,6 +26,8 @@
           </template>
         </van-cell>
         <van-cell center title="朋友圈" icon="friends-o" is-link to="/posts"></van-cell>
+        <van-cell v-if="userInfo.role === '超级管理员'" center title="好友加积分" icon="friends-o" is-link
+          @click="handleAddPoints"></van-cell>
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
@@ -64,6 +66,7 @@
           ]" />
         </van-form>
       </van-dialog>
+      <AddPoints ref="addPointsRef" />
     </div>
   </div>
 </template>
@@ -75,11 +78,14 @@ import { showToast, showDialog } from 'vant'
 import { getUserInfo, updateUserInfo } from '../api/user'
 import type { UserInfo } from '../types'
 import avatar from '@/assets/img/avatar.jpg';
+import AddPoints from '@/components/AddPoints.vue'
+
 const router = useRouter()
 const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem('userInfo')))
 const showPasswordDialog = ref(false)
 const showEditDialog = ref(false)
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const addPointsRef = ref<InstanceType<typeof AddPoints>>()
 
 const passwordForm = ref({
   oldPassword: '',
@@ -124,6 +130,9 @@ const handleChangePassword = () => {
   // 密码修改逻辑
 }
 
+function handleAddPoints() {
+  addPointsRef.value.openPopup();
+}
 const handleLogout = () => {
   showDialog({
     title: '提示',

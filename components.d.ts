@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddPoints: typeof import('./src/components/AddPoints.vue')['default']
+    copy: typeof import('./src/components/PostToMoments copy.vue')['default']
     FlipCard: typeof import('./src/components/FlipCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     LuckyWheel: typeof import('./src/components/LuckyWheel.vue')['default']

@@ -19,3 +19,6 @@ export const updateUserInfo = (data: { nickname?: string; email?: string }): Pro
 export const share = (data): Promise<ApiResponse<any>> => {
   return request.post('/share', data)
 }
+export const addPoints = (data): Promise<ApiResponse<any>> => {
+  return request.post('/addPoints', data)
+}
