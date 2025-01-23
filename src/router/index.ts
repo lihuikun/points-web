@@ -44,6 +44,12 @@ const router = createRouter({
           meta: { title: '每日任务', requiresAuth: true }
         },
         {
+          path: 'posts',
+          name: 'posts',
+          component: () => import('../views/posts.vue'),
+          meta: { requiresAuth: true }
+        },
+        {
           path: 'share',
           name: 'share',
           component: () => import('../views/Share.vue'),

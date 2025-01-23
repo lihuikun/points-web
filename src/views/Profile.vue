@@ -25,6 +25,7 @@
             <van-tag type="warning" v-else>未签到</van-tag>
           </template>
         </van-cell>
+        <van-cell center title="朋友圈" icon="friends-o" is-link to="/posts"></van-cell>
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
