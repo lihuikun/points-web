@@ -93,6 +93,7 @@ function addPost() {
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   margin-top: 46px;
   min-height: 90%;
+  padding-bottom: 50px;
 }
 
 .post-item {
