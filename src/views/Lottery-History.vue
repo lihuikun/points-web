@@ -6,7 +6,7 @@
 <template>
   <div>
     <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多抽奖记录了" @load="onLoad">
-      <van-cell v-for="item in tableData" :key="item.id" :title="item.awardName" :label="`${item.drawDate}`"
+      <van-cell v-for="item in tableData" :key="item.id" :title="item.awardName" :label="formatDate(item.drawDate)"
         :value="getAwardValue(item)" />
     </van-list>
   </div>
@@ -14,6 +14,7 @@
 
 <script lang='ts' setup>
 import { getLotteryHistory } from '@/api/lottery'
+import { formatDate } from '@/utils/time'
 const { tableData, finished, loading, params, prizes } = toRefs(
   reactive({
     tableData: [] as any[],

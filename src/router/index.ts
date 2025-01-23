@@ -38,6 +38,12 @@ const router = createRouter({
           meta: { title: '抽奖记录', requiresAuth: true }
         },
         {
+          path: 'history',
+          name: 'History',
+          component: () => import('../views/History.vue'),
+          meta: { title: '积分历史', requiresAuth: true }
+        },
+        {
           path: 'tasks',
           name: 'Tasks',
           component: () => import('../views/Tasks.vue'),

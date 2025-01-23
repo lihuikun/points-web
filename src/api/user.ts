@@ -9,8 +9,8 @@ export const getUserInfo = (): Promise<ApiResponse<UserInfo>> => {
   return request.get('/user/info')
 }
 
-export const getPointsHistory = (): Promise<ApiResponse<any>> => {
-  return request.get('/points/history')
+export const getPointsHistory = (params): Promise<ApiResponse<any>> => {
+  return request.get('/points/history', { params })
 }
 
 export const updateUserInfo = (data: { nickname?: string; email?: string }): Promise<ApiResponse<any>> => {

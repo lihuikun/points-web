@@ -1,18 +1,7 @@
 <template>
   <div class="history-container">
-    <van-nav-bar
-      title="积分历史"
-      left-arrow
-      @click-left="router.back()"
-    />
-    
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list
-        v-model:loading="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
+      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell-group inset v-for="item in list" :key="item.id">
           <van-cell :title="item.type" :value="`+${item.points}`">
             <template #label>
@@ -39,16 +28,14 @@ const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 const list = ref<any[]>([])
-
+const userInfo = ref<any>(JSON.parse(localStorage.getItem('userInfo') || '{}'))
 const onLoad = async () => {
-  try {
-    const res = await getPointsHistory()
-    if (res.code === 200) {
-      list.value = [...list.value, ...res.data]
-      finished.value = true
-    }
-  } catch (error) {
-    showToast('获取历史记录失败')
+  const res = await getPointsHistory({
+    userId: userInfo.value.id
+  })
+  if (res.code === 200) {
+    list.value = [...list.value, ...res.data]
+    finished.value = true
   }
   loading.value = false
 }
@@ -56,7 +43,6 @@ const onLoad = async () => {
 const onRefresh = () => {
   finished.value = false
   list.value = []
-  onLoad()
   refreshing.value = false
 }
 </script>

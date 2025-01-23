@@ -50,6 +50,7 @@ import { toRefs, reactive, onMounted } from 'vue';
 import type { UserInfo } from '../types';
 import avatar from '@/assets/img/avatar.jpg';
 import { showToast } from 'vant';
+import { formatDate } from '@/utils/time'
 
 const state = reactive({
   userInfo: JSON.parse(localStorage.getItem('userInfo')) as UserInfo,
@@ -74,17 +75,6 @@ async function deletePost(id) {
   pullToRefreshListRef.value.deleteTableData(id);
   showToast('删除成功');
 }
-const formatDate = (isoDate: string) => {
-  if (!isoDate) return '';
-  
-  // 加8小时
-  const date = new Date(new Date(isoDate).getTime() + 8 * 60 * 60 * 1000);
-  
-  return date.toISOString().replace('T', ' ').substring(0, 19);
-};
-
-// 测试用例
-console.log(formatDate('2025-01-22T16:00:00Z')); // 输出：2025-01-23 00:00:00
 
 async function refresh() {
   pullToRefreshListRef.value.fetchData(true);
