@@ -50,6 +50,12 @@ const router = createRouter({
           meta: { title: '每日任务', requiresAuth: true }
         },
         {
+          path: 'festive',
+          name: 'Festive',
+          component: () => import('../views/Festive.vue'),
+          meta: { title: '节日气氛', requiresAuth: true }
+        },
+        {
           path: 'posts',
           name: 'posts',
           component: () => import('../views/posts.vue'),

@@ -26,8 +26,8 @@
           </template>
         </van-cell>
         <van-cell center title="朋友圈" icon="friends-o" is-link to="/posts"></van-cell>
-        <van-cell v-if="userInfo.role === '超级管理员'" center title="好友加积分" icon="friends-o" is-link
-          @click="handleAddPoints"></van-cell>
+        <van-cell v-if="userInfo.role === '超级管理员'" center title="好友加积分" icon="friends-o" is-link @click="handleAddPoints"></van-cell>
+        <van-cell center title="节日气氛" icon="gift-o" is-link to="/festive" />
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
@@ -41,13 +41,10 @@
       </van-cell-group>
 
       <!-- 修改密码弹窗 -->
-      <van-dialog v-model:show="showPasswordDialog" title="修改密码" show-cancel-button @confirm="handleChangePassword"
-        :before-close="handlePasswordDialogClose">
+      <van-dialog v-model:show="showPasswordDialog" title="修改密码" show-cancel-button @confirm="handleChangePassword" :before-close="handlePasswordDialogClose">
         <van-form @submit.prevent>
-          <van-field v-model="passwordForm.oldPassword" type="password" label="原密码" placeholder="请输入原密码"
-            :rules="[{ required: true, message: '请输入原密码' }]" />
-          <van-field v-model="passwordForm.newPassword" type="password" label="新密码" placeholder="请输入新密码"
-            :rules="[{ required: true, message: '请输入新密码' }]" />
+          <van-field v-model="passwordForm.oldPassword" type="password" label="原密码" placeholder="请输入原密码" :rules="[{ required: true, message: '请输入原密码' }]" />
+          <van-field v-model="passwordForm.newPassword" type="password" label="新密码" placeholder="请输入新密码" :rules="[{ required: true, message: '请输入新密码' }]" />
           <van-field v-model="passwordForm.confirmPassword" type="password" label="确认密码" placeholder="请再次输入新密码" :rules="[
             { required: true, message: '请确认新密码' },
             { validator: validatePassword, message: '两次输入的密码不一致' }
@@ -56,8 +53,7 @@
       </van-dialog>
 
       <!-- 编辑用户信息弹窗 -->
-      <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo"
-        :before-close="handleEditDialogClose">
+      <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo" :before-close="handleEditDialogClose">
         <van-form @submit.prevent>
           <van-field v-model="editForm.nickname" label="昵称" placeholder="请输入昵称" />
           <van-field v-model="editForm.email" label="邮箱" placeholder="请输入邮箱" :rules="[
@@ -72,120 +68,120 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { showToast, showDialog } from 'vant'
-import { getUserInfo, updateUserInfo } from '../api/user'
-import type { UserInfo } from '../types'
-import avatar from '@/assets/img/avatar.jpg';
-import AddPoints from '@/components/AddPoints.vue'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { showToast, showDialog } from "vant";
+import { getUserInfo, updateUserInfo } from "../api/user";
+import type { UserInfo } from "../types";
+import avatar from "@/assets/img/avatar.jpg";
+import AddPoints from "@/components/AddPoints.vue";
 
-const router = useRouter()
-const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem('userInfo')))
-const showPasswordDialog = ref(false)
-const showEditDialog = ref(false)
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const addPointsRef = ref<InstanceType<typeof AddPoints>>()
+const router = useRouter();
+const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem("userInfo")));
+const showPasswordDialog = ref(false);
+const showEditDialog = ref(false);
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const addPointsRef = ref<InstanceType<typeof AddPoints>>();
 
 const passwordForm = ref({
-  oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
-})
+  oldPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
 
 const editForm = ref({
-  nickname: '',
-  email: ''
-})
+  nickname: "",
+  email: "",
+});
 
 const validatePassword = () => {
-  return passwordForm.value.newPassword === passwordForm.value.confirmPassword
-}
+  return passwordForm.value.newPassword === passwordForm.value.confirmPassword;
+};
 
 const handlePasswordDialogClose = (action: string) => {
-  if (action === 'confirm') {
+  if (action === "confirm") {
     // 这里添加修改密码的API调用
-    showToast('密码修改功能开发中')
-    return true
+    showToast("密码修改功能开发中");
+    return true;
   }
   passwordForm.value = {
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  }
-  return true
-}
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  };
+  return true;
+};
 
 const handleEditDialogClose = (action: string) => {
-  if (action === 'cancel') {
+  if (action === "cancel") {
     editForm.value = {
-      nickname: userInfo.value.nickname || '',
-      email: userInfo.value.email || ''
-    }
+      nickname: userInfo.value.nickname || "",
+      email: userInfo.value.email || "",
+    };
   }
-  return true
-}
+  return true;
+};
 
 const handleChangePassword = () => {
   // 密码修改逻辑
-}
+};
 
 function handleAddPoints() {
   addPointsRef.value.openPopup();
 }
 const handleLogout = () => {
   showDialog({
-    title: '提示',
-    message: '确定要退出登录吗？',
+    title: "提示",
+    message: "确定要退出登录吗？",
     showCancelButton: true,
   }).then((action) => {
-    if (action === 'confirm') {
-      localStorage.removeItem('token')
-      router.push('/auth')
+    if (action === "confirm") {
+      localStorage.removeItem("token");
+      router.push("/auth");
     }
-  })
-}
+  });
+};
 
 const handleUpdateInfo = async () => {
   if (!emailRegex.test(editForm.value.email)) {
-    showToast('请输入正确的邮箱格式')
-    return
+    showToast("请输入正确的邮箱格式");
+    return;
   }
 
   try {
-    const res = await updateUserInfo(editForm.value)
+    const res = await updateUserInfo(editForm.value);
     if (res.code === 200) {
-      showToast('更新成功')
-      const userRes = await getUserInfo()
+      showToast("更新成功");
+      const userRes = await getUserInfo();
       // 将其存到本地缓存
-      localStorage.setItem('userInfo', JSON.stringify(res.data))
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
       if (userRes.code === 200) {
-        userInfo.value = userRes.data
+        userInfo.value = userRes.data;
       }
     } else {
-      showToast(res.msg)
+      showToast(res.msg);
     }
   } catch (error) {
-    showToast('更新失败')
+    showToast("更新失败");
   }
-}
+};
 
 onMounted(async () => {
   try {
-    const res = await getUserInfo()
+    const res = await getUserInfo();
     // 将其存到本地缓存
-    localStorage.setItem('userInfo', JSON.stringify(res.data))
+    localStorage.setItem("userInfo", JSON.stringify(res.data));
     if (res.code === 200) {
-      userInfo.value = res.data
+      userInfo.value = res.data;
       editForm.value = {
-        nickname: res.data.nickname || '',
-        email: res.data.email || ''
-      }
+        nickname: res.data.nickname || "",
+        email: res.data.email || "",
+      };
     }
   } catch (error) {
-    showToast('获取用户信息失败')
+    showToast("获取用户信息失败");
   }
-})
+});
 </script>
 
 <style scoped>
