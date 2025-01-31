@@ -55,6 +55,20 @@
       <!-- 编辑用户信息弹窗 -->
       <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo" :before-close="handleEditDialogClose">
         <van-form @submit.prevent>
+          <van-field name="avatar" label="头像">
+        <template #input>
+          <van-uploader
+            :after-read="afterUpload"
+            accept="image/*"
+          >
+            <img
+              :src="editForm.avatar ? editForm.avatar : avatar"
+              class="avatar-preview"
+              alt="头像"
+            />
+          </van-uploader>
+        </template>
+      </van-field>
           <van-field v-model="editForm.nickname" label="昵称" placeholder="请输入昵称" />
           <van-field v-model="editForm.email" label="邮箱" placeholder="请输入邮箱" :rules="[
             { required: true, message: '请填写邮箱' },
@@ -75,6 +89,7 @@ import { getUserInfo, updateUserInfo } from "../api/user";
 import type { UserInfo } from "../types";
 import avatar from "@/assets/img/avatar.jpg";
 import AddPoints from "@/components/AddPoints.vue";
+import { addPic } from "@/api/posts";
 
 const router = useRouter();
 const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem("userInfo")));
@@ -92,6 +107,7 @@ const passwordForm = ref({
 const editForm = ref({
   nickname: "",
   email: "",
+  avatar: "",
 });
 
 const validatePassword = () => {
@@ -115,13 +131,30 @@ const handlePasswordDialogClose = (action: string) => {
 const handleEditDialogClose = (action: string) => {
   if (action === "cancel") {
     editForm.value = {
+      avatar: userInfo.value.avatar || "",
       nickname: userInfo.value.nickname || "",
       email: userInfo.value.email || "",
     };
   }
   return true;
 };
+const afterUpload = async (files) => {
+  const formData = new FormData();
+  console.log("🚀 ~ afterUpload ~ formData:", files)
+   // 兼容单个文件和多个文件上传
+   if (Array.isArray(files)) {
+    files.forEach(f => {
+      formData.append("files", f.file);
+    });
+  } else {
+    formData.append("files", files.file);
+  }
 
+  // 调用后端接口上传图片
+  const { data } = await addPic(formData);
+  editForm.value.avatar = data.urls[0];
+  console.log("🚀 ~ afterUpload ~ data:", data);
+};
 const handleChangePassword = () => {
   // 密码修改逻辑
 };
@@ -174,6 +207,7 @@ onMounted(async () => {
     if (res.code === 200) {
       userInfo.value = res.data;
       editForm.value = {
+        avatar: res.data.avatar || "",
         nickname: res.data.nickname || "",
         email: res.data.email || "",
       };
@@ -285,5 +319,10 @@ onMounted(async () => {
   top: 16px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
+}
+.avatar-preview{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 </style>
