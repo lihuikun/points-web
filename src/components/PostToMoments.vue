@@ -10,11 +10,10 @@
           <van-field v-model="location" placeholder="请输入您的位置" />
         </div>
         <div class="actions">
-          <van-button type="primary" block @click="postToMoments">发布</van-button>
+          <van-button type="primary" :loading="loading" :disabled="loading" block @click="postToMoments">发布</van-button>
         </div>
       </div>
     </van-popup>
-    <van-loading v-if="loading" type="spinner" color="#1989fa" vertical>图片上传中...</van-loading>
   </div>
 </template>
 
@@ -45,10 +44,10 @@ const afterUpload = async (files) => {
 
   loading.value = true; // 设置上传状态为加载中
   const formData = new FormData();
-  console.log("🚀 ~ afterUpload ~ formData:", files)
-   // 兼容单个文件和多个文件上传
-   if (Array.isArray(files)) {
-    files.forEach(f => {
+  console.log("🚀 ~ afterUpload ~ formData:", files);
+  // 兼容单个文件和多个文件上传
+  if (Array.isArray(files)) {
+    files.forEach((f) => {
       formData.append("files", f.file);
     });
   } else {
