@@ -15,3 +15,6 @@ export const getPosts = (params): Promise<ApiResponse<Post>> => {
 export const addPost = (data): Promise<ApiResponse<any>> => {
   return request.post('/posts', data)
 }
+export const addPic = (data): Promise<ApiResponse<any>> => {
+  return request.post('/gitee/upload', data)
+}
