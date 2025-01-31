@@ -6,7 +6,7 @@ const router = useRouter();
 const request = axios.create({
   //使用vite的代理的/api
   baseURL: '/api',
-  timeout: 5000
+  timeout: 500000
 })
 
 request.interceptors.request.use(
