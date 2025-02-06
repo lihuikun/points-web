@@ -26,7 +26,8 @@
           </template>
         </van-cell>
         <van-cell center title="朋友圈" icon="friends-o" is-link to="/posts"></van-cell>
-        <van-cell v-if="userInfo.role === '超级管理员'" center title="好友加积分" icon="friends-o" is-link @click="handleAddPoints"></van-cell>
+        <van-cell v-if="userInfo.role === '超级管理员'" center title="好友加积分" icon="friends-o" is-link
+          @click="handleAddPoints"></van-cell>
         <van-cell center title="节日气氛" icon="gift-o" is-link to="/festive" />
       </van-cell-group>
 
@@ -41,10 +42,13 @@
       </van-cell-group>
 
       <!-- 修改密码弹窗 -->
-      <van-dialog v-model:show="showPasswordDialog" title="修改密码" show-cancel-button @confirm="handleChangePassword" :before-close="handlePasswordDialogClose">
+      <van-dialog v-model:show="showPasswordDialog" title="修改密码" show-cancel-button @confirm="handleChangePassword"
+        :before-close="handlePasswordDialogClose">
         <van-form @submit.prevent>
-          <van-field v-model="passwordForm.oldPassword" type="password" label="原密码" placeholder="请输入原密码" :rules="[{ required: true, message: '请输入原密码' }]" />
-          <van-field v-model="passwordForm.newPassword" type="password" label="新密码" placeholder="请输入新密码" :rules="[{ required: true, message: '请输入新密码' }]" />
+          <van-field v-model="passwordForm.oldPassword" type="password" label="原密码" placeholder="请输入原密码"
+            :rules="[{ required: true, message: '请输入原密码' }]" />
+          <van-field v-model="passwordForm.newPassword" type="password" label="新密码" placeholder="请输入新密码"
+            :rules="[{ required: true, message: '请输入新密码' }]" />
           <van-field v-model="passwordForm.confirmPassword" type="password" label="确认密码" placeholder="请再次输入新密码" :rules="[
             { required: true, message: '请确认新密码' },
             { validator: validatePassword, message: '两次输入的密码不一致' }
@@ -53,22 +57,16 @@
       </van-dialog>
 
       <!-- 编辑用户信息弹窗 -->
-      <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo" :before-close="handleEditDialogClose">
+      <van-dialog v-model:show="showEditDialog" title="编辑个人信息" show-cancel-button @confirm="handleUpdateInfo"
+        :before-close="handleEditDialogClose">
         <van-form @submit.prevent>
           <van-field name="avatar" label="头像">
-        <template #input>
-          <van-uploader
-            :after-read="afterUpload"
-            accept="image/*"
-          >
-            <img
-              :src="editForm.avatar ? editForm.avatar : avatar"
-              class="avatar-preview"
-              alt="头像"
-            />
-          </van-uploader>
-        </template>
-      </van-field>
+            <template #input>
+              <van-uploader :after-read="afterUpload" accept="image/*">
+                <img :src="editForm.avatar ? editForm.avatar : avatar" class="avatar-preview" alt="头像" />
+              </van-uploader>
+            </template>
+          </van-field>
           <van-field v-model="editForm.nickname" label="昵称" placeholder="请输入昵称" />
           <van-field v-model="editForm.email" label="邮箱" placeholder="请输入邮箱" :rules="[
             { required: true, message: '请填写邮箱' },
@@ -89,7 +87,8 @@ import { getUserInfo, updateUserInfo } from "../api/user";
 import type { UserInfo } from "../types";
 import avatar from "@/assets/img/avatar.jpg";
 import AddPoints from "@/components/AddPoints.vue";
-import { addPic } from "@/api/posts";
+import { useUploadImage } from "@/hooks/useUploadImage";
+const { uploadImg } = useUploadImage();
 
 const router = useRouter();
 const userInfo = ref<UserInfo>(JSON.parse(localStorage.getItem("userInfo")));
@@ -139,21 +138,7 @@ const handleEditDialogClose = (action: string) => {
   return true;
 };
 const afterUpload = async (files) => {
-  const formData = new FormData();
-  console.log("🚀 ~ afterUpload ~ formData:", files)
-   // 兼容单个文件和多个文件上传
-   if (Array.isArray(files)) {
-    files.forEach(f => {
-      formData.append("files", f.file);
-    });
-  } else {
-    formData.append("files", files.file);
-  }
-
-  // 调用后端接口上传图片
-  const { data } = await addPic(formData);
-  editForm.value.avatar = data.urls[0];
-  console.log("🚀 ~ afterUpload ~ data:", data);
+  editForm.value.avatar = await uploadImg(files.file);
 };
 const handleChangePassword = () => {
   // 密码修改逻辑
@@ -320,7 +305,8 @@ onMounted(async () => {
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
 }
-.avatar-preview{
+
+.avatar-preview {
   width: 80px;
   height: 80px;
   border-radius: 50%;

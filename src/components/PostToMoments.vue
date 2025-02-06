@@ -20,15 +20,15 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { showToast } from "vant";
-import { addPost, addPic } from "@/api/posts";
+import { useUploadImage } from "@/hooks/useUploadImage";
+import { addPost } from "@/api/posts";
 
 const showPopup = ref(false); // 控制弹窗显示
 const content = ref(""); // 文本内容
 const images = ref([]); // 图片列表
-const imageList = ref([]); // 图片列表
 const userInfo = ref(JSON.parse(localStorage.getItem("userInfo") || "{}")); // 用户信息
 const location = ref("");
-const loading = ref(false);
+const { loading, imageList, afterUpload } = useUploadImage();
 // 打开弹窗
 const openPopup = () => {
   showPopup.value = true;
@@ -37,30 +37,6 @@ const openPopup = () => {
 // 关闭弹窗
 const closePopup = () => {
   showPopup.value = false;
-};
-// 图片上传后的钩子
-const afterUpload = async (files) => {
-  if (loading.value) return; // 防止重复上传
-
-  loading.value = true; // 设置上传状态为加载中
-  const formData = new FormData();
-  console.log("🚀 ~ afterUpload ~ formData:", files);
-  // 兼容单个文件和多个文件上传
-  if (Array.isArray(files)) {
-    files.forEach((f) => {
-      formData.append("files", f.file);
-    });
-  } else {
-    formData.append("files", files.file);
-  }
-
-  // 调用后端接口上传图片
-  const { data } = await addPic(formData);
-  console.log("🚀 ~ afterUpload ~ data:", data);
-
-  imageList.value = [...imageList.value, ...data.urls]; // 将返回的图片URL添加到现有图片列表中
-  loading.value = false; // 上传完成，设置上传状态为结束
-  console.log("🚀 ~ afterUpload ~ images:", images.value);
 };
 const emit = defineEmits(["refresh"]);
 // 发布朋友圈

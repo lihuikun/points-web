@@ -13,7 +13,7 @@ export const getPointsHistory = (params): Promise<ApiResponse<any>> => {
   return request.get('/points/history', { params })
 }
 
-export const updateUserInfo = (data: { nickname?: string; email?: string }): Promise<ApiResponse<any>> => {
+export const updateUserInfo = (data: { nickname?: string; email?: string, avatar?: string }): Promise<ApiResponse<any>> => {
   return request.put('/user/info', data)
 }
 export const share = (data): Promise<ApiResponse<any>> => {
