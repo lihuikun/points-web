@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddPoints: typeof import('./src/components/AddPoints.vue')['default']
+    Canvas: typeof import('./src/components/Canvas.vue')['default']
     FlipCard: typeof import('./src/components/FlipCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     LuckyWheel: typeof import('./src/components/LuckyWheel.vue')['default']
@@ -16,9 +17,12 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Share: typeof import('./src/components/Share.vue')['default']
+    TicketCanvas: typeof import('./src/components/TicketCanvas.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
+    VanCollapse: typeof import('vant/es')['Collapse']
+    VanCollapseItem: typeof import('vant/es')['CollapseItem']
     VanDialog: typeof import('vant/es')['Dialog']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
@@ -30,6 +34,7 @@ declare module 'vue' {
     VanImagePreview: typeof import('vant/es')['ImagePreview']
     VanList: typeof import('vant/es')['List']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanOverlay: typeof import('vant/es')['Overlay']
     VanPopup: typeof import('vant/es')['Popup']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanTab: typeof import('vant/es')['Tab']
@@ -37,6 +42,7 @@ declare module 'vue' {
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTabs: typeof import('vant/es')['Tabs']
     VanTag: typeof import('vant/es')['Tag']
+    VantDialog: typeof import('vant/es')['tDialog']
     VanUploader: typeof import('vant/es')['Uploader']
   }
 }

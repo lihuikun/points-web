@@ -5,6 +5,9 @@
       <van-cell title="分享任务" value="+10积分" @click="share" />
       <van-cell title="邀请好友" value="未完成" />
     </van-cell-group>
+    <van-cell-group inset>
+      <van-cell title="幸运刮刮乐" to="/ticket" is-link />
+    </van-cell-group>
     <Share v-model:show="showShare"></Share>
   </div>
 </template>
@@ -33,5 +36,8 @@ onMounted(async () => {
 .tasks-container {
   padding: 12px;
   background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 </style> 

@@ -32,6 +32,12 @@ const router = createRouter({
           meta: { title: '幸运抽奖', requiresAuth: true }
         },
         {
+          path: 'ticket',
+          name: 'Ticket',
+          component: () => import('../views/Ticket.vue'),
+          meta: { title: '幸运刮刮乐', requiresAuth: true }
+        },
+        {
           path: 'lottery-history',
           name: 'Lottery-History',
           component: () => import('../views/Lottery-History.vue'),
