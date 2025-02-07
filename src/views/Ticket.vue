@@ -42,14 +42,6 @@ const { tableData, finished, loading, userInfo, prizeInfo } = toRefs(
   })
 )
 const showScratch = ref(false); // 是否显示刮刮乐
-const prizeData = ref([
-  0, 5, 10, 0,
-  20, 0, 50, 5,
-  100, 200, 0, 10,
-  50, 100, 200, 0,
-  5, 10, 50, 0,
-  200, 0, 100, 10
-]);
 const TicketsCanvasRef = ref(null)
 async function onLoad() {
   const { data } = await getTickets()
@@ -79,44 +71,35 @@ async function confirm() {
 }
 </script>
 <style lang='scss' scoped>
-/* 外层容器增加 padding，让整体更有呼吸感 */
 .lottery-container {
   padding: 16px;
   background-color: #f5f5f5;
 }
-
-/* 已刮开样式 - 高级金属感 */
 .scratched-style {
   background: linear-gradient(145deg, #ffd700, #c49b00);
-  /* 金色渐变 */
   color: white;
   font-weight: bold;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 12px;
-  /* 增加间距 */
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.5);
   transform: scale(1.01);
   transition: all 0.3s ease-in-out;
 }
 
-/* 未刮开样式 - 未来科技感 */
 .unscratched-style {
   background: linear-gradient(145deg, #3a3a3a, #2c2c2c);
-  /* 深灰色渐变 */
   color: #bbb;
   font-weight: bold;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 12px;
-  /* 增加间距 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
 }
 
-/* 刮开前的神秘遮罩 */
 .unscratched-style::before {
   content: "刮开看看 🎭";
   position: absolute;
@@ -130,14 +113,10 @@ async function confirm() {
   font-size: 14px;
   transition: opacity 0.3s ease-in-out;
 }
-
-/* 鼠标悬停 - 有点微光效果 */
 .unscratched-style:hover {
   background: linear-gradient(145deg, #4a4a4a, #363636);
   transform: scale(1.02);
 }
-
-/* 统一所有cell的内边距 */
 .van-cell {
   padding: 16px;
 }

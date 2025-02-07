@@ -32,6 +32,18 @@ const router = createRouter({
           meta: { title: '幸运抽奖', requiresAuth: true }
         },
         {
+          path: 'gift',
+          name: 'Gift',
+          component: () => import('../views/Gift.vue'),
+          meta: { title: '礼品兑换', requiresAuth: true }
+        },
+        {
+          path: 'gift-manage',
+          name: 'Gift-Manage',
+          component: () => import('../views/Gift-Manage.vue'),
+          meta: { title: '礼品管理', requiresAuth: true }
+        },
+        {
           path: 'ticket',
           name: 'Ticket',
           component: () => import('../views/Ticket.vue'),

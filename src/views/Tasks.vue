@@ -7,6 +7,8 @@
     </van-cell-group>
     <van-cell-group inset>
       <van-cell title="幸运刮刮乐" to="/ticket" is-link />
+      <van-cell title="礼品兑换" to="/gift" is-link />
+      <van-cell title="礼品管理" v-if="userInfo?.role === '超级管理员'" to="/gift-manage" is-link />
     </van-cell-group>
     <Share v-model:show="showShare"></Share>
   </div>
@@ -19,6 +21,7 @@ import Share from '../components/Share.vue'
 
 const isCheckedIn = ref(JSON.parse(localStorage.getItem('userInfo') || '{}').isCheckedIn || false)
 const showShare = ref(false)
+const userInfo = ref(JSON.parse(localStorage.getItem('userInfo') || '{}'))
 function share() {
   showShare.value = true
 }
