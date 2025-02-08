@@ -250,6 +250,7 @@ defineExpose({
 }
 
 .slot {
+  display: inline-block;
   overflow: hidden;
 }
 
