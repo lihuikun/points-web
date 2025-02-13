@@ -7,6 +7,7 @@ export interface Gift {
   points: number;
   stock: number;
   createdAt: Date;
+  userId?: number;
 }
 
 export interface GiftResponse {
@@ -15,6 +16,7 @@ export interface GiftResponse {
   points: number;
   stock: number;
   createdAt: string; // 日期格式化为字符串
+  pointsUsed?: number;
 }
 
 // 获取所有礼品
@@ -40,4 +42,14 @@ export const updateGift = (id: number, data: Partial<Omit<Gift, 'id' | 'createdA
 // 删除礼品
 export const deleteGift = (id: number): Promise<ApiResponse<null>> => {
   return request.delete(`/gifts/${id}`);
+};
+
+// 兑换礼品
+export const redeemGift = (id: number, data: Pick<Gift, 'userId'>): Promise<ApiResponse<GiftResponse>> => {
+  return request.post(`/gifts/redeem/${id}`, data);
+}
+
+// 获取兑换记录
+export const getGiftRecords = (userId, params: { page: number, pageSize: number }): Promise<ApiResponse<{ total: number, rows: GiftResponse[] }>> => {
+  return request.get(`/gifts/redeem/records/${userId}`, { params });
 };
