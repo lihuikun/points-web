@@ -1,6 +1,7 @@
 <template>
   <div>
-    <van-button type="primary" size="small" class="add-button" @click="openEditPopup(null)">新增礼品</van-button>
+    <van-button v-if="userInfo?.role === '超级管理员'" type="primary" size="small" class="add-button"
+      @click="openEditPopup(null)">新增礼品</van-button>
     <van-button type="primary" size="small" class="add-button" @click="openHistoryPopup()">兑换记录</van-button>
     <van-list>
       <van-cell v-for="gift in gifts" :key="gift.id" :title="gift.name" :label="`积分: ${gift.points}, 库存: ${gift.stock}`">
@@ -186,5 +187,6 @@ const deleteGiftId = async (id: number) => {
 <style scoped>
 .add-button {
   margin: 16px;
+  margin-right: 2px;
 }
 </style>
