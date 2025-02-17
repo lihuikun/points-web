@@ -33,7 +33,6 @@
 
       <van-cell-group inset class="feature-group">
         <van-cell center title="积分记录" icon="balance-list-o" is-link to="/history" />
-        <van-cell center title="礼品兑换" icon="gift-o" is-link to="/lottery" />
       </van-cell-group>
 
       <van-cell-group inset class="feature-group">
