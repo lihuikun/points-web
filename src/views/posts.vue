@@ -69,7 +69,8 @@
     </PullToRefreshList>
     <PostToMoments ref="postPopupRef" @refresh="refresh" />
     <van-image-preview v-model:show="showImg" :images="imgUrl" :start-position="startPosition"></van-image-preview>
-    <van-popup v-model:show="commentPopupVisible" position="bottom" :style="{ height: '50%' }">
+    <van-popup v-model:show="commentPopupVisible" position="bottom" :style="{ height: '50%' }"
+      @closed="closeCommentPopup">
       <van-form @submit="saveComment">
         <van-field v-model="editInfo.content" placeholder="请输入您的评论内容" required />
         <div style="padding: 16px;">
@@ -167,17 +168,14 @@ function handleItem(item) {
   }
 }
 async function saveComment() {
-  commentPopupVisible.value = false;
   const params = {
     userId: userInfo.value.id,
     postId: editInfo.value.postId,
     content: editInfo.value.content
   }
-
-  const { data, code } = await addComment(params)
+  const { code } = await addComment(params)
   if (code === 200) {
     showToast("评论成功")
-
     const res = {
       ...editInfo.value.item, comments: [...editInfo.value.item.comments, {
         userId: userInfo.value.id, content: editInfo.value.content, createdAt: new Date().getTime(),
@@ -185,9 +183,12 @@ async function saveComment() {
       }]
     }
     pullToRefreshListRef.value.updateTableData(editInfo.value.postId, res);
+    closeCommentPopup()
   }
-  console.log("🚀 ~ saveComment ~ data:", data)
-
+}
+function closeCommentPopup() {
+  commentPopupVisible.value = false;
+  editInfo.value.content = "";
 }
 function isLikedByUser(postLikes) {
   return postLikes.some(like => like.userId === userInfo.value.id);
