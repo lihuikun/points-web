@@ -190,7 +190,7 @@ async function saveComment() {
 
 }
 function isLikedByUser(postLikes) {
-  return postLikes.some(like => like.userId === this.userInfo.id);
+  return postLikes.some(like => like.userId === userInfo.value.id);
 }
 </script>
 
