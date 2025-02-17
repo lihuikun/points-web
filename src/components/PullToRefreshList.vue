@@ -76,6 +76,14 @@ const onLoadMore = () => {
 const deleteTableData = (id: number) => {
   tableData.value = tableData.value.filter((item) => item.id !== id);
 }
+// 抛出一个方法，让父组件更新某一个数据
+const updateTableData = (id: number, data: any) => {
+  const index = tableData.value.findIndex((item) => item.id === id);
+  console.log("🚀 ~ updateTableData ~ index:", index,data)
+  if (index !== -1) {
+    tableData.value.splice(index, 1, data);
+  }
+}
 // 在组件挂载时初始化请求
 onMounted(() => {
   fetchData();
@@ -83,6 +91,7 @@ onMounted(() => {
 
 defineExpose({
   deleteTableData,
-  fetchData
+  fetchData,
+  updateTableData
 });
 </script>

@@ -18,3 +18,10 @@ export const addPost = (data): Promise<ApiResponse<any>> => {
 export const addPic = (data): Promise<ApiResponse<any>> => {
   return request.post('/gitee/upload', data)
 }
+export const addComment = (data): Promise<ApiResponse<any>> => {
+  return request.post('/posts/comment', data)
+}
+
+export const likePosts = (data): Promise<ApiResponse<any>> => {
+  return request.post('/posts/like', data)
+}
