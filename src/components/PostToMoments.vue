@@ -37,6 +37,10 @@ const openPopup = () => {
 // 关闭弹窗
 const closePopup = () => {
   showPopup.value = false;
+  content.value = "";
+  images.value = [];
+  location.value = "";
+  imageList.value = [];
 };
 const emit = defineEmits(["refresh"]);
 // 发布朋友圈

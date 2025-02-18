@@ -46,7 +46,8 @@ export function useUploadImage() {
 
         canvas.width = width;
         canvas.height = height;
-
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
         ctx?.drawImage(img, 0, 0, width, height);
 
         canvas.toBlob(
@@ -58,7 +59,7 @@ export function useUploadImage() {
             }
           },
           "image/jpeg",
-          0.8
+          0.9
         );
       };
     });
