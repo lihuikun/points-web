@@ -82,7 +82,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { showToast, showDialog } from "vant";
-import { getUserInfo, updateUserInfo } from "../api/user";
+import { getUserInfo, updateUserInfo, changePassword } from "../api/user";
 import type { UserInfo } from "../types";
 import avatar from "@/assets/img/avatar.jpg";
 import AddPoints from "@/components/AddPoints.vue";
@@ -114,8 +114,6 @@ const validatePassword = () => {
 
 const handlePasswordDialogClose = (action: string) => {
   if (action === "confirm") {
-    // 这里添加修改密码的API调用
-    showToast("密码修改功能开发中");
     return true;
   }
   passwordForm.value = {
@@ -139,8 +137,10 @@ const handleEditDialogClose = (action: string) => {
 const afterUpload = async (files) => {
   editForm.value.avatar = await uploadImg(files.file);
 };
-const handleChangePassword = () => {
+const handleChangePassword = async () => {
   // 密码修改逻辑
+  const { msg } = await changePassword(passwordForm.value)
+  showToast(msg)
 };
 
 function handleAddPoints() {

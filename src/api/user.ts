@@ -22,3 +22,6 @@ export const share = (data): Promise<ApiResponse<any>> => {
 export const addPoints = (data): Promise<ApiResponse<any>> => {
   return request.post('/addPoints', data)
 }
+export const changePassword = (data): Promise<ApiResponse<any>> => {
+  return request.put('/user/password', data)
+}
