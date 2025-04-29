@@ -18,6 +18,7 @@ declare module 'vue' {
     Share: typeof import('./src/components/Share.vue')['default']
     TicketCanvas: typeof import('./src/components/TicketCanvas.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCollapse: typeof import('vant/es')['Collapse']
