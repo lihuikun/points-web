@@ -28,13 +28,14 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
         manifest: {
-          name: '积分抽奖',
-          short_name: '积分抽奖',
-          description: '积分抽奖系统',
+          name: '恋爱日常',
+          short_name: '恋爱日常',
+          description: '恋爱日常系统',
           theme_color: '#ffffff',
           start_url: '/',
-          display: 'standalone',
+          display: 'fullscreen',
           background_color: '#ffffff',
+          orientation: 'portrait',
           icons: [
             {
               src: '/icon.png',

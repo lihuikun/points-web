@@ -11,6 +11,9 @@ import "vant/es/toast/style"
 import "vant/es/dialog/style"
 import "vant/es/image-preview/style"
 
+// 引入全局样式
+import './assets/styles/main.scss'
+
 const app = createApp(App)
 
 app.use(createPinia())
