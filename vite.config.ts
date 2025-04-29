@@ -33,14 +33,16 @@ export default defineConfig(({ mode }) => {
           description: '恋爱日常系统',
           theme_color: '#ffffff',
           start_url: '/',
-          display: 'fullscreen',
+          display: 'standalone',
+          display_override: ['fullscreen', 'standalone'],
           background_color: '#ffffff',
           orientation: 'portrait',
           icons: [
             {
               src: '/icon.png',
               sizes: '200x200',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             }
           ]
         },
